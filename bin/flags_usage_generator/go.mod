@@ -1,4 +1,4 @@
-module github.com/AWildBeard/errata/bin/flags_usage_generator
+module main
 
 go 1.20
 
