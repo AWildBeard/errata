@@ -86,7 +86,9 @@ func (cug *commandUsageGenerator) Usage(flagset *flag.FlagSet) string {
 
 		line += usage
 
-		line += fmt.Sprintf(" (Default: '%v')", fl.DefValue)
+		if fl.DefValue != "" {
+			line += fmt.Sprintf(" (Default: '%v')", fl.DefValue)
+		}
 
 		if len(fl.Deprecated) != 0 {
 			line += fmt.Sprintf(" (DEPRECATED: %s)", fl.Deprecated)
