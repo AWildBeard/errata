@@ -15,7 +15,7 @@ var (
 
 type CustomCommandUsage interface {
 	// Usage returns the usage generated from the config provided to NewCustomCommandUsage and the provided FlagSet
-	Usage(flag.FlagSet) string
+	Usage(*flag.FlagSet) string
 }
 
 type commandUsageGenerator struct {
@@ -28,7 +28,7 @@ func NewCustomCommandUsage(ccUsage Config) CustomCommandUsage {
 	return &commandUsageGenerator{ccUsage}
 }
 
-func (cug *commandUsageGenerator) Usage(flagset flag.FlagSet) string {
+func (cug *commandUsageGenerator) Usage(flagset *flag.FlagSet) string {
 	buf := new(bytes.Buffer)
 
 	maxlen := 0
