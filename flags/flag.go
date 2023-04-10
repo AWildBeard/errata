@@ -9,10 +9,6 @@ import (
 	"strings"
 )
 
-var (
-	usage Config
-)
-
 type CustomCommandUsage interface {
 	// Usage returns the usage generated from the config provided to NewCustomCommandUsage and the provided FlagSet
 	Usage(*flag.FlagSet) string
@@ -41,17 +37,17 @@ func (cug *commandUsageGenerator) Usage(flagset *flag.FlagSet) string {
 	}
 
 	fmt.Fprintf(buf, "Usage of %s\n", cmd)
-	fmt.Fprintf(buf, "Author: %s\n", usage.Author)
-	if len(usage.DescriptionElements) > 0 {
+	fmt.Fprintf(buf, "Author: %s\n", cug.config.Author)
+	if len(cug.config.DescriptionElements) > 0 {
 		fmt.Fprintf(buf, "Description:\n")
 
-		for index, elem := range usage.DescriptionElements {
+		for index, elem := range cug.config.DescriptionElements {
 			switch elem.Kind {
 			case Paragraph:
 				fmt.Fprintf(buf, "%s\n\n", wrap(2, cols, elem.Content))
 			case BulletPoint:
 				var fmtString string
-				if index+1 < len(usage.DescriptionElements) && usage.DescriptionElements[index+1].Kind == BulletPoint {
+				if index+1 < len(cug.config.DescriptionElements) && cug.config.DescriptionElements[index+1].Kind == BulletPoint {
 					fmtString = "  • %s\n"
 				} else {
 					fmtString = "  • %s\n\n"
